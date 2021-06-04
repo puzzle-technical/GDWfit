@@ -1,0 +1,12 @@
+{
+  "name": "GDWfit",
+  "displayName": "GDWfit",
+  "expo": {
+    "name": "GDWfit",
+    "slug": "GDWfit",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
