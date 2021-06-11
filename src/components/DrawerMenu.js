@@ -6,7 +6,7 @@ import { yellow, light, dark, graylight } from '../colors'
 
 export default function DrawerMenu ({ navigation }) {
   const user = {
-    nome: 'Gabriel Faneco de Souza',
+    nome: 'Fulano da Silva',
     email: 'gab.fan.sou@gmail.com'
   }
 
