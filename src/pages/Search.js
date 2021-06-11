@@ -38,7 +38,7 @@ export default function Home({ navigation }) {
 const styles = StyleSheet.create({
   wrapper: {
     position: 'relative',
-    backgroundColor: '#f44',
+    backgroundColor: dark,
     flex: 1
   },
   pageContainer: {

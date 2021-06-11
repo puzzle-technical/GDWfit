@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Alert } from 'react-native';
 import { dark, light } from '../colors'
 import fakeAPI from '../../fakeAPI'
 import Header from '../components/Header'
 import ActivityBox from '../components/ActivityBox';
+import AddActivityButton from '../components/AddActivityButton';
 
 import moment from 'moment';
 import 'moment/locale/pt-br';
 moment.locale('pt-br')
 
 export default function Search ({ navigation }) {
+  const capitalize = string => string.slice(0, 1).toUpperCase() + string.slice(1)
+
   const hoje = moment()
-  const dia = hoje.format('dddd')
+  const dia = capitalize(hoje.format('dddd'))
   const data = hoje.format('DD [de] MMMM [de] YYYY')
 
   const [atividades, setAtividades] = useState([])
@@ -19,6 +22,15 @@ export default function Search ({ navigation }) {
   useEffect(() => {
     setAtividades(fakeAPI.getAtividades(moment()))
   }, [])
+
+  const addActivity = (atividade, tempo) => {
+    let activity = {
+      atividade,
+      tempo,
+      data: moment().format('YYYY-MM-DD')
+    }
+    Alert.alert('Sucesso', `Atividade adicionada com sucesso!\n\n${JSON.stringify(activity)}`)
+  }
 
   return <View style={styles.wrapper}>
     <Header navigation={navigation}></Header>
@@ -32,14 +44,15 @@ export default function Search ({ navigation }) {
           })
         }
       </View>
-  </ScrollView>
+    </ScrollView>
+    <AddActivityButton onAdd={addActivity}/>
   </View>
 }
 
 const styles = StyleSheet.create({
   wrapper: {
     position: 'relative',
-    backgroundColor: '#f44',
+    backgroundColor: dark,
     flex: 1
   },
   pageContainer: {
