@@ -23,7 +23,7 @@ export default function Datepicker ({ defaultValue, onChange = () => {} }) {
 
   const onDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date
-    setShow(Platform.OS === 'ios')
+    setShow(false)
     setDate(currentDate)
     onChange(currentDate)
   }
