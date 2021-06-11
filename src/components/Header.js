@@ -8,7 +8,7 @@ export default function Header ({ navigation }) {
     <TouchableOpacity onPress={() => { navigation.openDrawer() }}>
       <MaterialIcons name="menu" color={light} size={40}/>
     </TouchableOpacity>
-    <Image source={require('../assets/img/Logo-light.png')}></Image>
+    <Image style={styles.image} source={require('../assets/img/Logo-light.png')}></Image>
   </View>
 }
 
@@ -19,8 +19,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: 20,
-    paddingBottom: 5,
     paddingHorizontal: 30,
+    elevation: 5
+  },
+  image: {
+    marginTop: 20
   }
 })

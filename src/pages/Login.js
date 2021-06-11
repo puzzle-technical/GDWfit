@@ -12,7 +12,7 @@ export default function Login({ navigation }) {
       email,
       senha
     }
-    console.log(loginData)
+    // console.log(loginData)
     let response = true
     if (response) navigation.navigate('Main', { screen: 'Home' })
   }

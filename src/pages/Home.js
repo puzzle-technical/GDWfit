@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { graydark, dark, light, green } from '../colors'
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { dark, light } from '../colors'
 import fakeAPI from '../../fakeAPI'
-import { Ionicons } from '@expo/vector-icons';
 import Header from '../components/Header'
+import ActivityBox from '../components/ActivityBox';
 
 import moment from 'moment';
 import 'moment/locale/pt-br';
 moment.locale('pt-br')
 
-export default function Home({ navigation }) {
+export default function Search ({ navigation }) {
   const hoje = moment()
   const dia = hoje.format('dddd')
   const data = hoje.format('DD [de] MMMM [de] YYYY')
@@ -17,38 +17,40 @@ export default function Home({ navigation }) {
   const [atividades, setAtividades] = useState([])
 
   useEffect(() => {
-    setAtividades(fakeAPI.getAtividades())
+    setAtividades(fakeAPI.getAtividades(moment()))
   }, [])
 
-  return <View style={styles.pageContainer}>
-    <Header></Header>
-    
-    <Text style={styles.dia}>{dia}</Text>
-    <Text style={styles.data}>{data}</Text>
-
-    {
-      atividades.map((el, id) => {
-        return <View key={id} style={styles.box}>
-          <View style={styles.boxInfo}>
-            <Text style={styles.boxText}>{el.atividade}</Text>
-            <Text style={styles.boxText}>{el.tempo}</Text>
-          </View>
-          <Ionicons color={green} size={35} name="checkmark"></Ionicons>
-        </View>
-      })
-    }
+  return <View style={styles.wrapper}>
+    <Header navigation={navigation}></Header>
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <View style={styles.pageContainer}>
+        <Text style={styles.dia}>{dia}</Text>
+        <Text style={styles.data}>{data}</Text>
+        {
+          atividades.map((el, index) => {
+            return <ActivityBox atividade={el.atividade} tempo={el.tempo} key={index}/>
+          })
+        }
+      </View>
+  </ScrollView>
   </View>
 }
 
 const styles = StyleSheet.create({
+  wrapper: {
+    position: 'relative',
+    backgroundColor: '#f44',
+    flex: 1
+  },
   pageContainer: {
-    height: '100%',
     backgroundColor: dark,
     alignItems: 'center',
-    position: 'relative'
+    paddingHorizontal: 30,
+    paddingBottom: 30,
+    height: '100%',
   },
   dia: {
-    marginTop: 50,
+    marginTop: 30,
     fontSize: 40,
     color: light
   },
@@ -56,21 +58,5 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: light,
     marginBottom: 30
-  },
-  box: {
-    backgroundColor: graydark,
-    borderRadius: 5,
-    padding: 20,
-    marginBottom: 20,
-    width: '85%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between'
-  },
-  boxInfo: {},
-  boxText: {
-    fontSize: 18,
-    color: light,
-    marginBottom: 5
   }
 })
